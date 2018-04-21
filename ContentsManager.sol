@@ -10,10 +10,14 @@ contract ContentsManager {
     string digitalSignature;
     uint amount;
   }
+  // コンテンツID管理
   uint private contentId = 0;
+  // コンテンツのhashをキーとしたコンテンツmapping
   mapping (string => Content) contents;
+  // コンテンツのIDをキーとキーとした購入者mapping
   mapping (uint => string[]) contentsConsumer;
 
+  // コンテンツ登録処理
   function uploadContent(string _contentsHash, string _encryptedContentsUrl, string _digitalSignature, uint _amount) public {
     contents[_contentsHash] = Content({
       id: contentId++,
@@ -25,6 +29,7 @@ contract ContentsManager {
     });
   }
 
+  // コンテンツのhashからコンテンツを検索
   function getContentForCreator(string _contentsHash) public constant returns (uint, string, uint) {
     Content memory content = contents[_contentsHash];
     require(msg.sender == content.creator);
