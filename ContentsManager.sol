@@ -5,6 +5,7 @@ contract ContentsManager {
   struct Content {
     uint id;
     address creator;
+    string contentsHash;
     string encryptedContentsUrl;
     string digitalSignature;
     uint amount;
@@ -17,6 +18,7 @@ contract ContentsManager {
     contents[_contentsHash] = Content({
       id: contentId++,
       creator: msg.sender,
+      contentsHash: _contentsHash,
       encryptedContentsUrl: _encryptedContentsUrl,
       digitalSignature: _digitalSignature,
       amount: _amount
