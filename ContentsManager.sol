@@ -16,6 +16,8 @@ contract ContentsManager {
   mapping (string => Content) contents;
   // コンテンツのIDをキーとキーとした購入者mapping
   mapping (uint => string[]) contentsConsumer;
+  // 購入者がどんなコンテンツを保持しているか
+  mapping (address => Content[]) boughtContents;
 
   // コンテンツ登録処理
   function uploadContent(string _contentsHash, string _encryptedContentsUrl, string _digitalSignature, uint _amount) public {
@@ -35,5 +37,4 @@ contract ContentsManager {
     require(msg.sender == content.creator);
     return (content.id, content.encryptedContentsUrl, content.amount);
   }
-
 }
