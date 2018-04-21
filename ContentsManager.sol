@@ -37,4 +37,18 @@ contract ContentsManager {
     require(msg.sender == content.creator);
     return (content.id, content.encryptedContentsUrl, content.amount);
   }
+
+  function register(Content _content) private {
+    boughtContents[msg.sender].push(_content);
+  }
+
+  function getBoughtContents() public constant returns (string) {
+    return boughtContents[msg.sender][0].contentsHash;
+  }
+
+  function buy(string _contentsHash) public payable {
+    Content memory content = contents[_contentsHash];
+    content.creator.send(content.amount);
+    register(contents[_contentsHash]);
+  }
 }
