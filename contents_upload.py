@@ -1,5 +1,6 @@
 import json
 import web3
+import sys
 
 from web3 import Web3, HTTPProvider, TestRPCProvider
 from solc import compile_source
@@ -84,6 +85,12 @@ contract_address = tx_receipt['contractAddress']
 abi = contract_interface['abi']
 contract_instance = w3.eth.contract(address=contract_address, abi=abi,ContractFactoryClass=ConciseContract)
 
-# Getters + Setters for web3.eth.contract object
-contract_instance.uploadContent("0xaaa", "http://hoge", "sign", 20, transact={'from': w3.eth.accounts[0]})
-print('Contract value: {}'.format(contract_instance.getContentForCreator("0xaaa")))
+# uploadConten parameter
+args = sys.argv
+content_hash = "0xa"  # TODO コンテンツデータを元にハッシュ関数を呼び出す
+encryptedContentsUrl = "http://hoge" # TODO 引数で渡されたURLを元に暗号化関数を呼び出す
+sign = "sign" # TODO 電子署名関数を呼び出す
+amount = 20 #args[3]
+
+contract_instance.uploadContent(content_hash, encryptedContentsUrl, sign, amount, transact={'from': w3.eth.accounts[0]})
+print('Contract value: {}'.format(contract_instance.getContentForCreator(content_hash)))
