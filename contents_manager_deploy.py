@@ -22,9 +22,9 @@ w3 = Web3(HTTPProvider('http://localhost:8545'));
 contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
 
 # Get transaction hash from deployed contract
-tx_hash = contract.deploy(transaction={'from': w3.eth.accounts[0], 'gas': 3000000})
+tx_hash = contract.deploy(transaction={'from': w3.eth.accounts[0], 'gas': 4000000})
 blockNumber=w3.eth.blockNumber
-sleep(10)
+sleep(20)
 
 # Get tx receipt to get contract address
 tx_receipt = w3.eth.getTransactionReceipt(tx_hash)

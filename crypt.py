@@ -10,7 +10,7 @@ def encrypt(pubkey, URL):
 
   cipher = PKCS1_OAEP.new(RSA.importKey(public_pem))
   cipher_text = cipher.encrypt(url)
-  
+
   return cipher_text
 
 def decrypt(private_key, URL):
