@@ -4,13 +4,23 @@ from Crypto.Cipher import PKCS1_OAEP
 from Crypto.Hash import SHA256
 
 #Create the rsa crypt url from pubkey
-def exportRSA(pubkey, URL):
+def encrypt(pubkey, URL):
   public_pem = open(pubkey).read()
   url = URL.encode('utf-8')
 
   cipher = PKCS1_OAEP.new(RSA.importKey(public_pem))
   cipher_text = cipher.encrypt(url)
   
+  return cipher_text
+
+def decrypt(private_key, URL):
+
+  private_pem = open(private_key).read()
+  url = URL.encode('utf-8')
+
+  cipher = PKCS1_OAEP.new(RSA.importKey(private_pem))
+  cipher_text = cipher.decrypt(url)
+
   return cipher_text
 
 #cipher = PKCS1_OAEP.new(RSA.importKey(private_pem))
