@@ -19,6 +19,10 @@ contract ContentsManager {
   // 購入者がどんなコンテンツを保持しているか
   mapping (address => Content[]) boughtContents;
 
+  // 暗号化したURLを購入者向けにプーリングする
+  mapping (address => string) poolUrls;
+  mapping (address => uint) poolBalances;
+
   // コンテンツ登録処理
   function uploadContent(string _contentsHash, string _encryptedContentsUrl, string _digitalSignature, uint _amount) public {
     contents[_contentsHash] = Content({
@@ -50,5 +54,20 @@ contract ContentsManager {
     Content memory content = contents[_contentsHash];
     content.creator.send(content.amount);
     register(contents[_contentsHash]);
+  }
+
+  // 作成者が一時的に暗号化されたURLをプールする
+  function poolUrl(address _consumer, string url) public {
+    poolUrls[_consumer] = url;
+  }
+
+  // 一時的に支払いする
+  function poolPay(uint amount) public {
+    poolBalances[msg.sender] = amount;
+  }
+
+  // 支払いが行われていれば暗号化されたURLを取得できる
+  function getContentsUrl() public constant returns (string) {
+    return poolUrls[msg.sender];
   }
 }
