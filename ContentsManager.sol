@@ -50,10 +50,11 @@ contract ContentsManager {
     return boughtContents[msg.sender][0].contentsHash;
   }
 
-  function buy(string _contentsHash) public payable {
+  function buy(string _contentsHash) private payable {
     Content memory content = contents[_contentsHash];
-    content.creator.send(content.amount);
-    register(contents[_contentsHash]);
+    if(poolBalances[msg.sendr] > content.amount)
+      content.creator.send(poolBalances[msg.sender]);
+      register(contents[_contentsHash]);
   }
 
   // 作成者が一時的に暗号化されたURLをプールする
@@ -67,7 +68,8 @@ contract ContentsManager {
   }
 
   // 支払いが行われていれば暗号化されたURLを取得できる
-  function getContentsUrl() public constant returns (string) {
-    return poolUrls[msg.sender];
+  function getContentsUrl(amount) public constant returns (string) {
+    if ()
+    )
   }
 }
